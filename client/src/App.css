@@ -6,9 +6,12 @@ body {
     padding: 0;
 }
 
+#app-container {
+    text-align: center;
+}
+
 /* HEADER */
 h1 {
-    text-align: center;
 }
 
 /* USER NAME FORM */
@@ -26,18 +29,30 @@ h1 {
 #uno-game-container {
     width: 80%;
     margin: auto;
+    margin-bottom: 40px;
     border: 1px solid black;
     border-radius: 20px;
     padding: 30px;
 }
 
 /* GAME CARDS */
+#draw-discard-piles {
+}
+
 #draw-discard-piles > img {
-    width: 200px;
+    width: 150px;
+}
+
+.player-cards {
 }
 
 .player-cards > img {
-    width: 200px;
+    width: 150px;
+}
+
+/* DEAL BUTTON */
+#deal-button {
+
 }
 
 /* FOOTER */
@@ -45,5 +60,4 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    text-align: center;
 }

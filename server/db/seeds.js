@@ -1,4 +1,4 @@
-use uno;
+// use uno;
 db.dropDatabase();
 
 db.cards.insertMany([

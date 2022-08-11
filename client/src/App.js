@@ -22,7 +22,7 @@ function App() {
     }, []);
 
     return (
-        <div>
+        <div id="app-container">
             <Header/>
             {/* MAIN CONTENT HERE */}
             { !user ?
