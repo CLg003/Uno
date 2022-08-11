@@ -7,7 +7,7 @@ import { getCards } from './services/CardsService';
 
 function App() {
 
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState("Ethan"); // SHOULD BE NULL
     const [cards, setCards] = useState(null);
 
     const inputUserName = (name) => {
@@ -22,7 +22,7 @@ function App() {
     }, []);
 
     return (
-        <div id="app">
+        <div>
             <Header/>
             {/* MAIN CONTENT HERE */}
             { !user ?

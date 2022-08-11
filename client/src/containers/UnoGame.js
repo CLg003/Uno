@@ -12,6 +12,12 @@ const UnoGame = ({cards, user}) => {
                 {/* Randomise order of cards then deal 7 to each of player 1 and player 2, 
                 remaining cards to pick-up pile, then top card [0] shift/unshift to play/discard pile (top card) */}
                 <p>card access test - First card in pile is "{cards[0].colour}, {cards[0].symbol}"</p>
+                <div id="draw-discard-piles">
+                    <img src={`${process.env.PUBLIC_URL}/assets/images/UNO-back.png`}/>
+                    <img src={`${process.env.PUBLIC_URL}${cards[0].image}`} alt="picture"/>
+                </div>
+                <p>Back of card</p>
+                
             </div>
         );
     }

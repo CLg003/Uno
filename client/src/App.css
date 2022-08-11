@@ -1,5 +1,49 @@
 /* MAIN APP */
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
 
 /* HEADER */
+h1 {
+    text-align: center;
+}
+
+/* USER NAME FORM */
+#enter-user-name {
+    max-width: 500px;
+    margin: auto;
+    /* margin-top: 10%; */
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 30px;
+}
+
+/* GAME CONTAINER */
+#uno-game-container {
+    width: 80%;
+    margin: auto;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 30px;
+}
+
+/* GAME CARDS */
+#draw-discard-piles > img {
+    width: 200px;
+}
+
+.player-cards > img {
+    width: 200px;
+}
 
 /* FOOTER */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
