@@ -1,4 +1,4 @@
-// use uno;
+use uno;
 db.dropDatabase();
 
 db.cards.insertMany([
@@ -265,7 +265,7 @@ db.cards.insertMany([
     {
         colour: "wild",
         symbol: "wild",
-        image: "/assets/images/UNO-wildsymbol.png"
+        image: "/assets/images/UNO-wildcard.png"
     },
     {
         colour: "wild",

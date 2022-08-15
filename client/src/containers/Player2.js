@@ -1,20 +1,20 @@
 import Card from "../components/Card";
 
-const Player1 = ({player1Cards}) => {
-        
-    const p1CardNodes = player1Cards.map((card, index) => {
+const Player2 = ({player2Cards}) => {
+
+    const p2CardNodes = player2Cards.map((card, index) => {
         return (
             <Card key={index} index={index} id={card._id} colour={card.colour} symbol={card.symbol} image={card.image}/>
         );
     });
 
     return (
-        <div id="player-1" className="player-cards">
-            <p>Player 1 here</p>
-            {(player1Cards.length > 0) 
+        <div id="player-2" className="player-cards">
+            <p>Player 2 here</p>
+            {(player2Cards.length > 0) 
             ?
             <ul className="cards-in-hand">
-                {p1CardNodes}
+                {p2CardNodes}
             </ul>
             :
             <p>No cards here</p>}
@@ -23,4 +23,4 @@ const Player1 = ({player1Cards}) => {
 
 }
 
-export default Player1;
+export default Player2;

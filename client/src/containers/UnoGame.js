@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import Player1 from './Player1';
+import Player2 from './Player2';
 
 const UnoGame = ({cards, user}) => {
 
@@ -22,9 +23,12 @@ const UnoGame = ({cards, user}) => {
         let shuffled = shuffleCards(cards);
         // console.log(shuffled);
         let p1Cards = [];
+        let p2Cards = [];
         for (let i = 1; i <= 7; i++) {
             p1Cards.push(shuffled.shift());
             setPlayer1Cards(p1Cards);
+            p2Cards.push(shuffled.shift());
+            setPlayer2Cards(p2Cards);
         }
     }
 
@@ -38,7 +42,7 @@ const UnoGame = ({cards, user}) => {
             <div id="uno-game-container">
                 <p>Uno card game here</p>
 
-                <p>card access test - First card in pile is "{cards[0].colour}, {cards[0].symbol}"</p>
+                <p>card access test - top card in discard pile is "{cards[0].colour}, {cards[0].symbol}"</p>
                 
                 <Player1 player1Cards={player1Cards}/>
                 
@@ -52,6 +56,7 @@ const UnoGame = ({cards, user}) => {
                     <img src={`${process.env.PUBLIC_URL}/assets/images/UNO-back.png`}/>
                     <img src={`${process.env.PUBLIC_URL}/assets/images/UNO-back.png`}/>
                 </div> */}
+
                 <div id="draw-discard-piles">
                     {/* PLACEHOLDER CARDS FOR LAYOUT */}
                     <img src={`${process.env.PUBLIC_URL}/assets/images/UNO-back.png`}/>
@@ -60,8 +65,10 @@ const UnoGame = ({cards, user}) => {
 
                 <button id="deal-button" onClick={handleDeal}>Deal</button>
 
+                <Player2 player2Cards={player2Cards}/>
+
                 {/* PLACEHOLDER CARDS FOR LAYOUT */}
-                <div id="player-2" className="player-cards">
+                {/* <div id="player-2" className="player-cards">
                     <img src={`${process.env.PUBLIC_URL}/assets/images/UNO-back.png`}/>
                     <img src={`${process.env.PUBLIC_URL}/assets/images/UNO-back.png`}/>
                     <img src={`${process.env.PUBLIC_URL}/assets/images/UNO-back.png`}/>
@@ -69,7 +76,8 @@ const UnoGame = ({cards, user}) => {
                     <img src={`${process.env.PUBLIC_URL}/assets/images/UNO-back.png`}/>
                     <img src={`${process.env.PUBLIC_URL}/assets/images/UNO-back.png`}/>
                     <img src={`${process.env.PUBLIC_URL}/assets/images/UNO-back.png`}/>
-                </div>                
+                </div>   
+                              */}
             </div>
         );
     }

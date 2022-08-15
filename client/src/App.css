@@ -50,6 +50,10 @@ h1 {
     width: 150px;
 }
 
+.cards-in-hand > img {
+    width: 150px;
+}
+
 /* DEAL BUTTON */
 #deal-button {
 
