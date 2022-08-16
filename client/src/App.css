@@ -37,6 +37,9 @@ h1 {
 
 /* GAME CARDS */
 #draw-discard-piles {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 #draw-discard-piles > img {
