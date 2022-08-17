@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import Player1 from './Player1';
 import Player2 from './Player2';
+import DiscardPile from '../components/DiscardPile';
 
 const UnoGame = ({cards, user}) => {
 
@@ -11,6 +12,7 @@ const UnoGame = ({cards, user}) => {
     const [player2Cards, setPlayer2Cards] = useState([]);
     const [newGame, setNewGame] = useState(true);
     const [dealCards, setDealCards] = useState(false);
+    const [discardedCard, setDiscardedCard] = useState(false);
 
     const discardPile = [];
     // let lastDiscarded;
@@ -53,8 +55,15 @@ const UnoGame = ({cards, user}) => {
         setDealCards(true);
     }
 
+    const displayTopCard = () => {
+
+    }
+
     const handleDiscard = () => {
         discardPile.unshift(cards.shift());
+        setDiscardedCard(true);
+        displayTopCard();
+        console.log(discardedCard);
         console.log(discardPile[0]);
         console.log(discardPile[0].image);
         console.log(discardPile.length);
@@ -95,11 +104,12 @@ const UnoGame = ({cards, user}) => {
                     {/* DRAW PILE */}
                     <img src={`${process.env.PUBLIC_URL}/assets/images/UNO-back.png`}/>
 
+                    <DiscardPile discardPile={discardPile} discardedCard={discardedCard}/>
                     {/* DISCARD PILE */}
-                    {(discardPile.length > 0) ?
+                    {/* {(discardPile.length > 0) ?
                     <p>{discardPile[0].colour}, {discardPile[0].symbol}</p>
                     :
-                    <p>Not turned over</p>}
+                    <p>Not turned over</p>} */}
 
                 </div>
                 
@@ -108,7 +118,7 @@ const UnoGame = ({cards, user}) => {
                 : 
                 null}
 
-                {(dealCards) ?
+                {dealCards ?
                 <button onClick={handleDiscard}>Turn over top card to start</button>
                 :
                 null}
