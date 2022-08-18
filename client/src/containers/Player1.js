@@ -13,7 +13,7 @@ const Player1 = ({player1Cards}) => {
             <p>Player 1 here</p>
             {(player1Cards.length > 0) 
             ?
-            <ul className="cards-in-hand">
+            <ul className="cards">
                 {p1CardNodes}
             </ul>
             :

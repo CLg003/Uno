@@ -38,28 +38,24 @@ h1 {
 /* GAME CARDS */
 #draw-discard-piles {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cards {
+    display: flex;
     flex-direction: row;
+    flex-flow: wrap row;
     justify-content: center;
 }
 
-#draw-discard-piles > img {
-    width: 150px;
-}
-
-.player-cards {
-}
-
-.player-cards > img {
-    width: 150px;
-}
-
-.cards-in-hand > img {
+.cards > img {
     width: 150px;
 }
 
 /* DEAL BUTTON */
 #deal-button {
-
+    width: 100px;
 }
 
 /* FOOTER */
