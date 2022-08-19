@@ -12,6 +12,8 @@ const UnoGame = ({cards, user}) => {
     const [player2Cards, setPlayer2Cards] = useState([]);
     const [dealCards, setDealCards] = useState(false);
     const [cardInPlay, setCardInPlay] = useState(null);
+    const [drawCards, setDrawCards] = useState([]);
+    const [player1Turn, setPlayer1Turn] = useState(false);
 
     // useEffect(() => {setNewGame(false)}, [dealCards]);
     // useEffect(() => {setDealCards(true)}, [!newGame]);
@@ -44,12 +46,21 @@ const UnoGame = ({cards, user}) => {
             p2Cards.push(shuffled.shift());
             setPlayer2Cards(p2Cards);
         }
-        setCardInPlay(cards.shift());
         setDealCards(true);
+        setDrawCards(shuffled);
     }
 
-    const displayTopCard = () => {
+    const invalidStartCardSymbols = ["miss", "reverse", "plus2", "wild", "plus4"];
 
+    const checkCardValidity = () => {
+        if (!invalidStartCardSymbols.includes(cardInPlay.symbol)) {
+            console.log("All okay");
+        }
+    }
+
+    const turnOverTopCard = () => {
+        setCardInPlay(drawCards.shift());
+        checkCardValidity();
     }
 
     {/* DRAG n DROP REQUIREMENTS */}
@@ -60,14 +71,16 @@ const UnoGame = ({cards, user}) => {
     if(cards) {
         return (
             <div id="uno-game-container">
-                <p>Uno card game here</p>
                 <button onClick={handleNewGame}>New Game</button>
 
-                <p>card access test - top card in discard pile is "{cards[0].colour}, {cards[0].symbol}"</p>
-                
+                { cardInPlay ?
+                <p>card access test - card in play is "{cardInPlay.colour}, {cardInPlay.symbol}"</p>
+                :
+                null
+                }   
                 <Player1 player1Cards={player1Cards}/>
 
-                <DrawAndDiscard cards={cards} dealCards={dealCards} handleDeal={handleDeal} cardInPlay={cardInPlay}/>
+                <DrawAndDiscard dealCards={dealCards} handleDeal={handleDeal} cardInPlay={cardInPlay} invalidStartCardSymbols={invalidStartCardSymbols} turnOverTopCard={turnOverTopCard}/>
 
                 <Player2 player2Cards={player2Cards}/>
 

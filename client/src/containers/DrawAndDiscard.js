@@ -1,6 +1,6 @@
 import Card from "../components/Card";
 
-const DrawAndDiscard = ({cards, dealCards, handleDeal, cardInPlay}) => {
+const DrawAndDiscard = ({dealCards, handleDeal, cardInPlay, invalidStartCardSymbols, turnOverTopCard}) => {
 
         return (
             <div id="draw-discard-piles">
@@ -13,9 +13,7 @@ const DrawAndDiscard = ({cards, dealCards, handleDeal, cardInPlay}) => {
                     ?
                     <img src={`${process.env.PUBLIC_URL}${cardInPlay.image}`}/>
                     :
-                    <p>No card in play</p>}
-
-                    {/* DISCARD PILE */}
+                    null}
                 </div>
 
                 {/* DEAL BUTTON */}
@@ -25,6 +23,19 @@ const DrawAndDiscard = ({cards, dealCards, handleDeal, cardInPlay}) => {
                 : 
                 null}
 
+                {/* TURN OVER TOP CARD BUTTON */}
+                {dealCards && !cardInPlay
+                ?
+                <button onClick={turnOverTopCard}>Click to turn over top card of draw pile</button>
+                :
+                null}
+
+                {/* INVALID START CARD BUTTON */}
+                {cardInPlay && invalidStartCardSymbols.includes(cardInPlay.symbol)
+                ?
+                <button onClick={turnOverTopCard}>Invalid start card - click to turn over another card</button>
+                :
+                null}
             </div>
 
 
