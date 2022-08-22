@@ -1,7 +1,10 @@
+import React from 'react';
 import {useEffect, useState} from 'react';
 import Player1 from './Player1';
 import Player2 from './Player2';
 import DrawAndDiscard from './DrawAndDiscard';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const UnoGame = ({cards, user}) => {
 
@@ -13,7 +16,7 @@ const UnoGame = ({cards, user}) => {
     const [dealCards, setDealCards] = useState(false);
     const [cardInPlay, setCardInPlay] = useState(null);
     const [drawCards, setDrawCards] = useState([]);
-    const [player1Turn, setPlayer1Turn] = useState(false);
+    const [playerTurn, setPlayerTurn] = useState(null);
 
     // useEffect(() => {setNewGame(false)}, [dealCards]);
     // useEffect(() => {setDealCards(true)}, [!newGame]);
@@ -22,8 +25,10 @@ const UnoGame = ({cards, user}) => {
     const handleNewGame = () => {
         setPlayer1Cards([]);
         setPlayer2Cards([]);
-        setCardInPlay(null);
         setDealCards(false);
+        setCardInPlay(null);
+        setDrawCards([]);
+        setPlayerTurn(null);
     }
 
     {/* SHUFFLING & DEALING CARDS */}
@@ -50,17 +55,31 @@ const UnoGame = ({cards, user}) => {
         setDrawCards(shuffled);
     }
 
+    const nextPlayer = () => {
+        if (!playerTurn) {
+            setPlayerTurn(1);
+        } else {
+            (playerTurn == 1) ? setPlayerTurn(2) : setPlayerTurn(1);
+        }
+    }
+
     const invalidStartCardSymbols = ["miss", "reverse", "plus2", "wild", "plus4"];
 
-    const checkCardValidity = () => {
-        if (!invalidStartCardSymbols.includes(cardInPlay.symbol)) {
-            console.log("All okay");
+    const checkStartCardValidity = cardToPlay => {
+        if (!invalidStartCardSymbols.includes(cardToPlay.symbol)) {
+            nextPlayer();
         }
     }
 
     const turnOverTopCard = () => {
-        setCardInPlay(drawCards.shift());
-        checkCardValidity();
+        const cardToPlay = drawCards.shift();
+        checkStartCardValidity(cardToPlay);
+        setCardInPlay(cardToPlay);
+    }
+
+    const playCard = (card, playerCards) => {
+        setCardInPlay(card);
+        (playerTurn == 1 ? setPlayer1Cards(playerCards) : setPlayer2Cards(playerCards));
     }
 
     {/* DRAG n DROP REQUIREMENTS */}
@@ -77,13 +96,16 @@ const UnoGame = ({cards, user}) => {
                 <p>card access test - card in play is "{cardInPlay.colour}, {cardInPlay.symbol}"</p>
                 :
                 null
-                }   
-                <Player1 player1Cards={player1Cards}/>
+                } 
 
-                <DrawAndDiscard dealCards={dealCards} handleDeal={handleDeal} cardInPlay={cardInPlay} invalidStartCardSymbols={invalidStartCardSymbols} turnOverTopCard={turnOverTopCard}/>
+                {/* DnD FUNCTIONALITY WRAPPER */}
+                <DndProvider backend={HTML5Backend}>
+                    <Player1 player1Cards={player1Cards}/>
 
-                <Player2 player2Cards={player2Cards}/>
+                    <DrawAndDiscard dealCards={dealCards} handleDeal={handleDeal} cardInPlay={cardInPlay} invalidStartCardSymbols={invalidStartCardSymbols} turnOverTopCard={turnOverTopCard} playerTurn={playerTurn} playCard={playCard} player1Cards={player1Cards} player2Cards={player2Cards}/>
 
+                    <Player2 player2Cards={player2Cards}/>
+                </DndProvider>
             </div>
         );
     }

@@ -1,17 +1,20 @@
-import Card from "../components/Card";
+import React from 'react';
+import CardInPlay from './CardInPlay';
 
-const DrawAndDiscard = ({dealCards, handleDeal, cardInPlay, invalidStartCardSymbols, turnOverTopCard}) => {
+const DrawAndDiscard = ({dealCards, handleDeal, cardInPlay, invalidStartCardSymbols, turnOverTopCard, playerTurn, playCard, player1Cards, player2Cards}) => {
 
         return (
             <div id="draw-discard-piles">
                 <div className="cards">
                     {/* DRAW PILE */}
-                    <img src={`${process.env.PUBLIC_URL}/assets/images/UNO-back.png`}/>
+                    <img src={`${process.env.PUBLIC_URL}/assets/images/UNO-back.png`} alt="card back"/>
+
+                    {/* DISCARD PILE aka DROP ZONE */}
 
                     {/* CARD IN PLAY */}
                     {cardInPlay 
                     ?
-                    <img src={`${process.env.PUBLIC_URL}${cardInPlay.image}`}/>
+                    <CardInPlay id={cardInPlay._id} colour={cardInPlay.colour} symbol={cardInPlay.symbol} image={cardInPlay.image} playCard={playCard} playerCards={playerTurn === 1 ? player1Cards : player2Cards}/>
                     :
                     null}
                 </div>

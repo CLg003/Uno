@@ -1,3 +1,4 @@
+import React from 'react';
 import Card from "../components/Card";
 
 const Player2 = ({player2Cards}) => {

@@ -1,10 +1,11 @@
+import React from 'react';
 import Card from "../components/Card";
 
 const Player1 = ({player1Cards}) => {
         
     const p1CardNodes = player1Cards.map((card, index) => {
         return (
-            <Card key={index} index={index} id={card._id} colour={card.colour} symbol={card.symbol} image={card.image}/>
+            <Card key={index} id={card._id} colour={card.colour} symbol={card.symbol} image={card.image}/>
         );
     });
 
