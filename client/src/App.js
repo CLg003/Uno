@@ -25,6 +25,7 @@ function App() {
     return (
         <div id="app-container">
             <Header/>
+            
             {/* MAIN CONTENT HERE */}
             { !user ?
             <EnterUserName inputUserName={inputUserName}/>

@@ -36,11 +36,11 @@ h1 {
 }
 
 /* GAME CARDS */
-#draw-discard-piles {
+/* #draw-discard-piles {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
+} */
 
 .cards {
     display: flex;

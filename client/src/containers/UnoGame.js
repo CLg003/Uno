@@ -1,15 +1,14 @@
 import React from 'react';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import Player1 from './Player1';
 import Player2 from './Player2';
 import DrawAndDiscard from './DrawAndDiscard';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import GamePlayHints from './GamePlayHints';
 
 const UnoGame = ({cards, user}) => {
 
-    {/* STATES */}
-    {/* States for player 1, player 2 (both 7 cards on dealing from shuffled/random-sorted cards), newGame, dealCards, pick-up pile (top card=[0], .shift from start of array), discard pile (top card=[0], .unshift into start of array) */}
+    // STATES
+    // States for player 1, player 2 (both 7 cards on dealing from shuffled/random-sorted cards), newGame, dealCards, pick-up pile (top card=[0], .shift from start of array), discard pile (top card=[0], .unshift into start of array)
 
     const [player1Cards, setPlayer1Cards] = useState([]);
     const [player2Cards, setPlayer2Cards] = useState([]);
@@ -21,7 +20,7 @@ const UnoGame = ({cards, user}) => {
     // useEffect(() => {setNewGame(false)}, [dealCards]);
     // useEffect(() => {setDealCards(true)}, [!newGame]);
 
-    {/* HANDLE NEW GAME */}
+    // HANDLE NEW GAME
     const handleNewGame = () => {
         setPlayer1Cards([]);
         setPlayer2Cards([]);
@@ -31,9 +30,8 @@ const UnoGame = ({cards, user}) => {
         setPlayerTurn(null);
     }
 
-    {/* SHUFFLING & DEALING CARDS */}
-    {/* Randomise order of cards then deal 7 to each of player 1 and player 2, 
-    remaining cards to pick-up pile, then top card [0] shift/unshift to play/discard pile (top card) */}
+    // SHUFFLING & DEALING CARDS
+    // Randomise order of cards then deal 7 to each of player 1 and player 2, remaining cards to pick-up pile, then top card [0] shift/unshift to play/discard pile (top card)
 
     const shuffleCards = (cardsToShuffle) => {
         let shuffledDeck = cardsToShuffle.sort(function(a, b) {return Math.random() - 0.5}).map(card => card);
@@ -59,33 +57,29 @@ const UnoGame = ({cards, user}) => {
         if (!playerTurn) {
             setPlayerTurn(1);
         } else {
-            (playerTurn == 1) ? setPlayerTurn(2) : setPlayerTurn(1);
-        }
-    }
-
-    const invalidStartCardSymbols = ["miss", "reverse", "plus2", "wild", "plus4"];
-
-    const checkStartCardValidity = cardToPlay => {
-        if (!invalidStartCardSymbols.includes(cardToPlay.symbol)) {
-            nextPlayer();
+            (playerTurn === 1) ? setPlayerTurn(2) : setPlayerTurn(1);
         }
     }
 
     const turnOverTopCard = () => {
         const cardToPlay = drawCards.shift();
-        checkStartCardValidity(cardToPlay);
-        setCardInPlay(cardToPlay);
+        console.log(cardToPlay);
+        setCardInPlay(cardToPlay);        
+    }
+
+    const startGame = () => {
+        setPlayerTurn(1);
     }
 
     const playCard = (card, playerCards) => {
         setCardInPlay(card);
-        (playerTurn == 1 ? setPlayer1Cards(playerCards) : setPlayer2Cards(playerCards));
+        (playerTurn === 1 ? setPlayer1Cards(playerCards) : setPlayer2Cards(playerCards));
     }
 
-    {/* DRAG n DROP REQUIREMENTS */}
-    {/* Need 3 areas to drag items from - player 1, player 2 and pick-up pile*/}
-    {/* Need 3 dropzones - player 1, player 2, play/discard pile */}
-    {/* Acceptable types should be equal to current discard pile colour/symbol/wild */}
+    // DRAG n DROP REQUIREMENTS - CHANGED TO onClick FUNCTIONS
+    // Need 3 areas to drag items from - player 1, player 2 and pick-up pil
+    // Need 3 dropzones - player 1, player 2, play/discard pile
+    // Acceptable types should be equal to current discard pile colour/symbol/wild
 
     if(cards) {
         return (
@@ -97,15 +91,15 @@ const UnoGame = ({cards, user}) => {
                 :
                 null
                 } 
+                
+                <Player1 player1Cards={player1Cards}/>
 
-                {/* DnD FUNCTIONALITY WRAPPER */}
-                <DndProvider backend={HTML5Backend}>
-                    <Player1 player1Cards={player1Cards}/>
+                <DrawAndDiscard cardInPlay={cardInPlay} playerTurn={playerTurn} playCard={playCard} player1Cards={player1Cards} player2Cards={player2Cards}/>
+                
+                <GamePlayHints dealCards={dealCards} handleDeal={handleDeal} cardInPlay={cardInPlay} turnOverTopCard={turnOverTopCard} playerTurn={playerTurn} startGame={startGame}/>
 
-                    <DrawAndDiscard dealCards={dealCards} handleDeal={handleDeal} cardInPlay={cardInPlay} invalidStartCardSymbols={invalidStartCardSymbols} turnOverTopCard={turnOverTopCard} playerTurn={playerTurn} playCard={playCard} player1Cards={player1Cards} player2Cards={player2Cards}/>
-
-                    <Player2 player2Cards={player2Cards}/>
-                </DndProvider>
+                <Player2 player2Cards={player2Cards}/>
+                
             </div>
         );
     }
