@@ -64,34 +64,35 @@ const UnoGame = ({cards, user}) => {
     // onClick PLAY
     // 2 onClick possible - Card (player 1 & player 2) and Draw pile - to place in discard pile (CardInPlay)
     // Acceptable cards equal to cardInPlay colour/symbol
-    const handleClickCard = (event) => {
-        // if (playerTurn) {
+    const onCardClick = function(index) {
+        if (playerTurn) {
+            const cardsInHand = ((playerTurn === 1) ? player1Cards : player2Cards);
+            const cardToPlay = cardsInHand[index];
+            console.log(`${cardToPlay.colour}, ${cardToPlay.symbol}`)
             console.log("Card clicked");
-            console.log(event.target);
-        // const cardsInHand = ((playerTurn === 1) ? player1Cards : player2Cards);
-        // const cardToPlay = cardsInHand.filter((card) => card._id === id)[0];
-        // if ((cardToPlay.colour === cardInPlay.colour) || (cardToPlay.symbol === cardInPlay.symbol)) {
-        //     playCard(cardToPlay, cardsInHand);
-        // }
-        // }
+    
+        if ((cardToPlay.colour === cardInPlay.colour) || (cardToPlay.symbol === cardInPlay.symbol)) {
+            playCard(cardToPlay, cardsInHand);
+        }
+        }
     }
     
     // PLAY CARD
-    // const playCard = (cardPlayed, cardsInHand) => {
-    //     setCardInPlay(cardPlayed);
-    //     const newCardsInHand = cardsInHand.filter((card) => card._id !== cardPlayed._id);
-    //     (playerTurn === 1 ? setPlayer1Cards(newCardsInHand) : setPlayer2Cards(newCardsInHand));
-    //     nextPlayer();
-    // }
+    const playCard = (cardPlayed, cardsInHand) => {
+        setCardInPlay(cardPlayed);
+        const newCardsInHand = cardsInHand.filter((card) => card._id !== cardPlayed._id);
+        (playerTurn === 1 ? setPlayer1Cards(newCardsInHand) : setPlayer2Cards(newCardsInHand));
+        nextPlayer();
+    }
     
     // SET NEXT PLAYER
-    // const nextPlayer = () => {
-    //     if (!playerTurn) {
-    //         setPlayerTurn(1);
-    //     } else {
-    //         (playerTurn === 1) ? setPlayerTurn(2) : setPlayerTurn(1);
-    //     }
-    // }
+    const nextPlayer = () => {
+        if (!playerTurn) {
+            setPlayerTurn(1);
+        } else {
+            (playerTurn === 1) ? setPlayerTurn(2) : setPlayerTurn(1);
+        }
+    }
 
     if(cards) {
         return (
@@ -104,13 +105,13 @@ const UnoGame = ({cards, user}) => {
                 null
                 } 
                 
-                <Player1 player1Cards={player1Cards} playerTurn={playerTurn} handleClickCard={handleClickCard}/>
+                <Player1 player1Cards={player1Cards} playerTurn={playerTurn} onCardClick={onCardClick}/>
 
                 <DrawAndDiscard cardInPlay={cardInPlay} playerTurn={playerTurn} player1Cards={player1Cards} player2Cards={player2Cards}/>
                 
                 <Deal dealCards={dealCards} handleDeal={handleDeal} cardInPlay={cardInPlay} turnOverTopCard={turnOverTopCard} playerTurn={playerTurn} startGame={startGame}/>
 
-                <Player2 player2Cards={player2Cards} playerTurn={playerTurn} handleClickCard={handleClickCard}/>
+                <Player2 player2Cards={player2Cards} playerTurn={playerTurn} onCardClick={onCardClick}/>
                 
             </div>
         );
