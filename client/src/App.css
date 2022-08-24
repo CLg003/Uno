@@ -42,14 +42,14 @@ h1 {
     align-items: center;
 } */
 
-.cards {
+.cards-displayed {
     display: flex;
     flex-direction: row;
     flex-flow: wrap row;
     justify-content: center;
 }
 
-.cards > img {
+.card {
     width: 150px;
 }
 

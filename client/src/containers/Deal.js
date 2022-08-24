@@ -1,6 +1,6 @@
 import React from 'react';
 
-const GamePlayHints = ({dealCards, handleDeal, cardInPlay, turnOverTopCard, playerTurn, startGame}) => {
+const Deal = ({dealCards, handleDeal, cardInPlay, turnOverTopCard, playerTurn, startGame}) => {
 
     const invalidStartCardSymbols = ["miss", "reverse", "plus2", "wild", "plus4"];
 
@@ -34,15 +34,9 @@ const GamePlayHints = ({dealCards, handleDeal, cardInPlay, turnOverTopCard, play
             :
             null}
 
-            {/* PLAYER 1 TO PLAY */}
-            {(playerTurn === 1)
-            ?
-            <p>Click on one of your cards to play it or click to take a card from the draw pile</p>
-            :
-            null}
         </div>
     );
 
 }
 
-export default GamePlayHints;
+export default Deal;

@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Card = ({id, colour, symbol, image}) => {
+const Card = ({id, colour, symbol, image, playerTurn}) => {
 
     return (
-        <img id="card" src={`${process.env.PUBLIC_URL}${image}`} alt="card face"/>
+        <img className="card" src={`${process.env.PUBLIC_URL}${image}`} alt="card face"/>
     );
     
 }

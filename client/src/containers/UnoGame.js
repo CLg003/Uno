@@ -3,7 +3,7 @@ import {useState} from 'react';
 import Player1 from './Player1';
 import Player2 from './Player2';
 import DrawAndDiscard from './DrawAndDiscard';
-import GamePlayHints from './GamePlayHints';
+import Deal from './Deal';
 
 const UnoGame = ({cards, user}) => {
 
@@ -30,8 +30,8 @@ const UnoGame = ({cards, user}) => {
         setPlayerTurn(null);
     }
 
-    // SHUFFLING & DEALING CARDS
-    // Randomise order of cards then deal 7 to each of player 1 and player 2, remaining cards to pick-up pile, then top card [0] shift/unshift to play/discard pile (top card)
+    // SHUFFLE & DEAL CARDS
+    // Randomise order of cards then deal 7 to each of player 1 and player 2, remaining cards to pick-up pile
 
     const shuffleCards = (cardsToShuffle) => {
         let shuffledDeck = cardsToShuffle.sort(function(a, b) {return Math.random() - 0.5}).map(card => card);
@@ -40,7 +40,6 @@ const UnoGame = ({cards, user}) => {
 
     const handleDeal = () => {
         let shuffled = shuffleCards(cards);
-        // console.log(shuffled);
         let p1Cards = [];
         let p2Cards = [];
         for (let i = 1; i <= 7; i++) {
@@ -53,33 +52,46 @@ const UnoGame = ({cards, user}) => {
         setDrawCards(shuffled);
     }
 
-    const nextPlayer = () => {
-        if (!playerTurn) {
-            setPlayerTurn(1);
-        } else {
-            (playerTurn === 1) ? setPlayerTurn(2) : setPlayerTurn(1);
-        }
-    }
-
     const turnOverTopCard = () => {
-        const cardToPlay = drawCards.shift();
-        console.log(cardToPlay);
-        setCardInPlay(cardToPlay);        
+        const cardToTurn = drawCards.shift();
+        setCardInPlay(cardToTurn);        
     }
 
     const startGame = () => {
         setPlayerTurn(1);
     }
 
-    const playCard = (card, playerCards) => {
-        setCardInPlay(card);
-        (playerTurn === 1 ? setPlayer1Cards(playerCards) : setPlayer2Cards(playerCards));
+    // onClick PLAY
+    // 2 onClick possible - Card (player 1 & player 2) and Draw pile - to place in discard pile (CardInPlay)
+    // Acceptable cards equal to cardInPlay colour/symbol
+    const handleClickCard = (event) => {
+        // if (playerTurn) {
+            console.log("Card clicked");
+            console.log(event.target);
+        // const cardsInHand = ((playerTurn === 1) ? player1Cards : player2Cards);
+        // const cardToPlay = cardsInHand.filter((card) => card._id === id)[0];
+        // if ((cardToPlay.colour === cardInPlay.colour) || (cardToPlay.symbol === cardInPlay.symbol)) {
+        //     playCard(cardToPlay, cardsInHand);
+        // }
+        // }
     }
-
-    // DRAG n DROP REQUIREMENTS - CHANGED TO onClick FUNCTIONS
-    // Need 3 areas to drag items from - player 1, player 2 and pick-up pil
-    // Need 3 dropzones - player 1, player 2, play/discard pile
-    // Acceptable types should be equal to current discard pile colour/symbol/wild
+    
+    // PLAY CARD
+    // const playCard = (cardPlayed, cardsInHand) => {
+    //     setCardInPlay(cardPlayed);
+    //     const newCardsInHand = cardsInHand.filter((card) => card._id !== cardPlayed._id);
+    //     (playerTurn === 1 ? setPlayer1Cards(newCardsInHand) : setPlayer2Cards(newCardsInHand));
+    //     nextPlayer();
+    // }
+    
+    // SET NEXT PLAYER
+    // const nextPlayer = () => {
+    //     if (!playerTurn) {
+    //         setPlayerTurn(1);
+    //     } else {
+    //         (playerTurn === 1) ? setPlayerTurn(2) : setPlayerTurn(1);
+    //     }
+    // }
 
     if(cards) {
         return (
@@ -92,13 +104,13 @@ const UnoGame = ({cards, user}) => {
                 null
                 } 
                 
-                <Player1 player1Cards={player1Cards}/>
+                <Player1 player1Cards={player1Cards} playerTurn={playerTurn} handleClickCard={handleClickCard}/>
 
-                <DrawAndDiscard cardInPlay={cardInPlay} playerTurn={playerTurn} playCard={playCard} player1Cards={player1Cards} player2Cards={player2Cards}/>
+                <DrawAndDiscard cardInPlay={cardInPlay} playerTurn={playerTurn} player1Cards={player1Cards} player2Cards={player2Cards}/>
                 
-                <GamePlayHints dealCards={dealCards} handleDeal={handleDeal} cardInPlay={cardInPlay} turnOverTopCard={turnOverTopCard} playerTurn={playerTurn} startGame={startGame}/>
+                <Deal dealCards={dealCards} handleDeal={handleDeal} cardInPlay={cardInPlay} turnOverTopCard={turnOverTopCard} playerTurn={playerTurn} startGame={startGame}/>
 
-                <Player2 player2Cards={player2Cards}/>
+                <Player2 player2Cards={player2Cards} playerTurn={playerTurn} handleClickCard={handleClickCard}/>
                 
             </div>
         );
