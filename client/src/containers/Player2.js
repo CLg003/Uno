@@ -1,7 +1,8 @@
 import React from 'react';
 import Card from "../components/Card";
+import SelectColour from '../components/SelectColour';
 
-const Player2 = ({player2Cards, playerTurn, onCardClick}) => {
+const Player2 = ({player2Cards, playerTurn, onCardClick, rejectCard, selectColour, wildColourChoice}) => {
 
     const p2CardNodes = player2Cards.map((card, index) => {
         return (
@@ -20,6 +21,21 @@ const Player2 = ({player2Cards, playerTurn, onCardClick}) => {
             <p>Click on one of your cards to play or click the draw pile to pick up a card</p>
             :
             null}
+
+            {/* REJECT CARD */}
+            {(playerTurn === 2 && rejectCard)
+            ?
+            <p>You can't play this card!</p>
+            :
+            null}
+
+            {/* SELECT COLOUR */}
+            {(playerTurn === 2 && selectColour)
+            ?
+            <SelectColour wildColourChoice={wildColourChoice}/>
+            :
+            null}
+
 
             {(player2Cards.length > 0) 
             ?
