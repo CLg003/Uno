@@ -1,8 +1,9 @@
 import React from 'react';
 import Card from "../components/Card";
 import SelectColour from '../components/SelectColour';
+import PlayOrKeep from '../components/PlayOrKeep';
 
-const Player1 = ({player1Cards, playerTurn, onCardClick, rejectCard, selectColour, wildColourChoice}) => {
+const Player1 = ({player1Cards, playerTurn, onCardClick, rejectCard, selectColour, wildColourChoice, choosePlayOrKeep}) => {
         
     const p1CardNodes = player1Cards.map((card, index) => {
         return (
@@ -41,6 +42,13 @@ const Player1 = ({player1Cards, playerTurn, onCardClick, rejectCard, selectColou
             {(playerTurn === 1 && selectColour)
             ?
             <SelectColour wildColourChoice={wildColourChoice}/>
+            :
+            null}
+
+            {/* CHOOSE TO PLAY OR KEEP CARD FROM DRAW PILE */}
+            {(playerTurn === 1 && choosePlayOrKeep)
+            ?
+            <PlayOrKeep />
             :
             null}
 

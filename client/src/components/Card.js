@@ -4,8 +4,8 @@ const Card = ({id, index, colour, symbol, image, playerTurn, onCardClick}) => {
 
     const handleClick = function() {
         onCardClick(index);
-        console.log(`Clicked on ${colour} ${symbol}`);
-        console.log({index});
+        // console.log(`Clicked on ${colour} ${symbol}`);
+        // console.log({index});
     }
 
     return (

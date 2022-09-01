@@ -19,6 +19,7 @@ const UnoGame = ({cards, user}) => {
     const [rejectCard, setRejectCard] = useState(false);
     const [selectColour, setSelectColour] = useState(false);
     const [wildColour, setWildColour] = useState(null);
+    const [choosePlayOrKeep, setChoosePlayOrKeep] = useState(false);
 
     // useEffect(() => {setNewGame(false)}, [dealCards]);
     // useEffect(() => {setDealCards(true)}, [!newGame]);
@@ -34,7 +35,7 @@ const UnoGame = ({cards, user}) => {
         setRejectCard(false);
         setSelectColour(false);
         setWildColour(null);
-    }
+        setChoosePlayOrKeep(false);    }
 
     // SHUFFLE & DEAL CARDS
     // Randomise order of cards then deal 7 to each of player 1 and player 2, remaining cards to pick-up pile
@@ -103,15 +104,30 @@ const UnoGame = ({cards, user}) => {
         }
     }
 
+    
+
     // if (cardInPlay.symbol === "plus2")
 
     // if (cardInPlay.symbol === "wild")
 
     // if (cardInPlay.symbol === "plus4")
 
-    // const onDrawClick = function() {
+    const onDrawClick = function() {
+        if (playerTurn) {
+            const cardsInHand = ((playerTurn === 1) ? player1Cards : player2Cards);
+            // console.log("Draw pile clicked");
 
-    // }
+        
+            const cardDrawn = drawCards.shift();
+            if ((cardDrawn.colour === "wild") || (cardDrawn.colour === cardInPlay.colour) || (cardDrawn.symbol === cardInPlay.symbol)) {
+                setChoosePlayOrKeep(true);
+            }
+            // CHOOSE WHETHER TO PLAY OR KEEP CARD 
+            // Play ? go to onCardClick
+            // else push card to cardsInHand for respective player      
+            
+        }
+    }
     
     // PLAY CARD
     const playCard = (cardPlayed, cardsInHand) => {
@@ -153,13 +169,13 @@ const UnoGame = ({cards, user}) => {
                 null
                 } 
                 
-                <Player1 player1Cards={player1Cards} playerTurn={playerTurn} onCardClick={onCardClick} rejectCard={rejectCard} selectColour={selectColour} wildColourChoice={wildColourChoice}/>
+                <Player1 player1Cards={player1Cards} playerTurn={playerTurn} onCardClick={onCardClick} rejectCard={rejectCard} selectColour={selectColour} wildColourChoice={wildColourChoice} choosePlayOrKeep={choosePlayOrKeep}/>
 
-                <DrawAndDiscard cardInPlay={cardInPlay} playerTurn={playerTurn} player1Cards={player1Cards} player2Cards={player2Cards}/>
+                <DrawAndDiscard cardInPlay={cardInPlay} playerTurn={playerTurn} player1Cards={player1Cards} player2Cards={player2Cards} onDrawClick={onDrawClick} choosePlayOrKeep={choosePlayOrKeep}/>
                 
                 <Deal dealCards={dealCards} handleDeal={handleDeal} cardInPlay={cardInPlay} turnOverTopCard={turnOverTopCard} playerTurn={playerTurn} startGame={startGame}/>
 
-                <Player2 player2Cards={player2Cards} playerTurn={playerTurn} onCardClick={onCardClick} rejectCard={rejectCard} selectColour={selectColour} wildColourChoice={wildColourChoice}/>
+                <Player2 player2Cards={player2Cards} playerTurn={playerTurn} onCardClick={onCardClick} rejectCard={rejectCard} selectColour={selectColour} wildColourChoice={wildColourChoice} choosePlayOrKeep={choosePlayOrKeep}/>
                 
             </div>
         );
